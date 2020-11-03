@@ -10,7 +10,7 @@ class Calendar {
         this.CalendarNODE.style.position = "relative";
         
         this.currentYear = new Date().getFullYear();
-        this.currentMounth = new Date().getMonth();
+        this.currentMounth = new Date().getMonth() + 1;
         this.datesInCurrentMounth = this.getDaysInMounth(
             this.currentYear,
             this.currentMounth
@@ -48,7 +48,7 @@ class Calendar {
         return days[date];
     }
     getMonth(number){
-        let mounths = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        let mounths = ["","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         return mounths[number];
     }
     generetaCalendar() {
