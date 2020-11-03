@@ -162,18 +162,18 @@ class Calendar {
         return div;
     }
     next() {
-        if (this.currentMounth == 11) {
+        if (this.currentMounth == 12) {
             this.currentYear = +this.currentYear + 1;
-            this.currentMounth = 0;
+            this.currentMounth = 1;
         } else {
             this.currentMounth += 1;
         }
         this.preGenerate();
     }
     back() {
-        if (this.currentMounth == 0) {
+        if (this.currentMounth == 1) {
             this.currentYear = +this.currentYear - 1;
-            this.currentMounth = 11;
+            this.currentMounth = 12;
         } else {
             this.currentMounth -= 1;
         }
