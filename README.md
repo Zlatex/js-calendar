@@ -2,7 +2,7 @@
 ## How to use
 add 
 ```html
-<script src="https://raw.githubusercontent.com/Zlatex/js-calendar/main/calendar.js"> </script>
+<script src="https://zlatex-calendar.netlify.app/calendar.js"> </script>
 ```
 before `</body>` and then write some js. For example:
 ```js
