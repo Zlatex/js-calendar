@@ -1,10 +1,12 @@
+Date.prototype.GetDayFrom1 = function () {
+    var day = this.getDay();
+    return day == 0 ? 6 : day - 1;
+};
+
 class Calendar {
     constructor(calendarDiv) {
 
-        Date.prototype.normalSukaGetDay = function () {
-            var day = this.getDay();
-            return day == 0 ? 6 : day - 1;
-        };
+
 
         this.CalendarNODE = calendarDiv;
         this.CalendarNODE.style.position = "relative";
@@ -40,7 +42,7 @@ class Calendar {
         return new Date(year, mounth, 0).getDate();
     }
     getDateStartAt(y, m) {
-        return new Date(y, m, 1).normalSukaGetDay();
+        return new Date(y, m, 1).GetDayFrom1();
     }
     getWeekDay(date) {
         let days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"];
