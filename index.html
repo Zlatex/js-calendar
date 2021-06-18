@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      .calendar-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .calendar-page-info {
+        text-align: center;
+      }
+      .calendar-page-info h2 {
+        margin: 5px 0;
+      }
+      .calendar-table {
+        min-height: 156px;
+      }
+      .calendar-buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      a.calendar-button {
+        display: flex;
+        background: #9e9e9e;
+        color: #fff;
+        padding: 5px 10px;
+        margin: 0 10px 10px;
+        user-select: none;
+        cursor: pointer;
+      }
+      a.calendar-button:hover {
+        background: #a9a9a9;
+      }
+      .calendar-year-select-wrapper {
+        text-align: center;
+      }
+    </style>
+    <div class="calendar-div"></div>
+    <script src="./calendar.js"></script>
+    <script>
+      var calendarDiv = document.querySelector(".calendar-div");
+      new Calendar(calendarDiv).generetaCalendar();
+    </script>
+  </body>
+</html>
