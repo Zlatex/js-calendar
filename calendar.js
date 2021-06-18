@@ -6,40 +6,37 @@ Date.prototype.GetDayFrom1 = function () {
 class Calendar {
     constructor(calendarDiv) {
 
-
-
         this.CalendarNODE = calendarDiv;
-        this.CalendarNODE.style.position = "relative";
         
         this.currentYear = new Date().getFullYear();
-        this.currentMounth = new Date().getMonth() + 1;
-        this.datesInCurrentMounth = this.getDaysInMounth(
+        this.currentMonth = new Date().getMonth() + 1;
+        this.datesInCurrentMonth = this.getDaysInMonth(
             this.currentYear,
-            this.currentMounth
+            this.currentMonth
         );
         this.DateStartAt = this.getDateStartAt(
             this.currentYear,
-            this.currentMounth
+            this.currentMonth
         );
         this.table = document.createElement("table");
-        this.table.style.userSelect = "none";
+        this.table.classList.add("calendar-table")
 
         this.infoDiv = document.createElement("div")
-        this.infoDiv.style.display = "flex";
-        this.infoDiv.style.justifyContent = "space-between";
+        this.infoDiv.classList.add("calendar-page-info")
         this.CalendarNODE.appendChild(this.infoDiv);
 
-        this.mounth = document.createElement("h2");
-        this.infoDiv.appendChild(this.mounth);
+        this.month = document.createElement("h2");
+        this.month.classList.add("calendar-current-month")
+        this.infoDiv.appendChild(this.month);
         
         this.year = document.createElement("h2");
         this.year.textContent = this.currentYear;
-        this.year.style.padding = 0;
+        this.year.classList.add("calendar-current-year")
         this.infoDiv.appendChild(this.year);
 
     }
-    getDaysInMounth(year, mounth) {
-        return new Date(year, mounth, 0).getDate();
+    getDaysInMonth(year, month) {
+        return new Date(year, month, 0).getDate();
     }
     getDateStartAt(y, m) {
         return new Date(y, m, 1).GetDayFrom1();
@@ -50,37 +47,42 @@ class Calendar {
         return days[date];
     }
     getMonth(number){
-        let mounths = ["","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        return mounths[number];
+        let months = ["","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        return months[number];
     }
     generetaCalendar() {
         const table = this.table;
         var day = 1;
         this.year.textContent = this.currentYear;
         for (let i = 0; i <= 6; i++) {
-            if (day > this.datesInCurrentMounth) continue;
+            if (day > this.datesInCurrentMonth) continue;
             const tr = document.createElement("tr");
+            tr.classList.add("calendar-line");
+            if(i == 0) tr.classList.add("calendar-days-line");
             table.appendChild(tr);
 
             for (let k = 0; k <= 6; k++) {
                 const td = document.createElement("th");
-                td.style.textAlign = "center";
+                td.classList.add("calendar-item");
                 tr.appendChild(td);
                 if (i == 0) {
                     td.textContent = this.getWeekDay(k);
+                    td.classList.add("calendar-day");
                     continue;
                 }
-                if ((i == 1 && k < this.DateStartAt) || day > this.datesInCurrentMounth)
+                if ((i == 1 && k < this.DateStartAt) || day > this.datesInCurrentMonth){
+                    td.classList.add("calendar-empty-item");
                     continue;
+                }
                 td.textContent = day;
                 day++;
             }
         }
        
 
-        const mounthText = this.getMonth(this.currentMounth);
+        const monthText = this.getMonth(this.currentMonth);
         
-        this.mounth.textContent = mounthText;
+        this.month.textContent = monthText;
 
         this.CalendarNODE.appendChild(table);
 
@@ -88,8 +90,7 @@ class Calendar {
     }
     createFooter(){
         const div = this.footerDiv = document.createElement("div");
-        div.style.display = "flex";
-        div.style.justifyContent = "space-between";
+        div.classList.add("calendar-footer");
 
         div.appendChild(this.BackNextBttn());
         div.appendChild(this.SelectYearNode());
@@ -99,17 +100,8 @@ class Calendar {
         this.foterCreated = true;
     }
     BackNextBttn() {
-        var hover = (event) => {
-            if (event.type == "mouseover") {
-                event.target.style.background = "rgb(206,206,206)";
-            }
-            if (event.type == "mouseout") {
-                event.target.style.background = "#f1f1f1";
-            }
-        };
-        const div = document.createElement("div");
-        div.style.paddingTop = "15px";
-        div.style.userSelect = "none";
+        const buttons = document.createElement("div");
+        buttons.classList.add("calendar-buttons");
 
         const back = document.createElement("a");
         const next = document.createElement("a");
@@ -117,34 +109,33 @@ class Calendar {
         back.textContent = "<";
         next.textContent = ">";
 
-        div.appendChild(back);
-        div.appendChild(next);
+        buttons.appendChild(back);
+        buttons.appendChild(next);
 
-        back.style.fontSize = next.style.fontSize = "16px"
-        back.style.padding = next.style.padding = "10px";
-        back.style.border = next.style.border = "none";
-        back.style.boxShadow = next.style.boxShadow = "none";
-        back.style.cursor = next.style.cursor = "pointer";
-        back.style.background = next.style.background = "#f1f1f1";
-        back.style.margin = next.style.margin = "5px";
+        back.classList.add("calendar-button");
+        next.classList.add("calendar-button");
 
-        back.onmouseover = back.onmouseout = next.onmouseover = next.onmouseout = hover;
+        back.classList.add("calendar-button-back");
+        next.classList.add("calendar-button-back");
+
         back.addEventListener("click", () => this.back());
         next.addEventListener("click", () => this.next());
 
         
-        return div;
+        return buttons;
     }
     SelectYearNode (){
         const div = document.createElement("div");
+        div.classList.add("calendar-year-select-wrapper");
 
         const select = document.createElement("select");
-        select.style.userSelect = "none";
+        select.classList.add("calendar-year-select");
 
         for (let i = 2010; i <= this.currentYear + 10; i++){
             const year = i;
 
             const option = document.createElement("option");
+            option.classList.add("calendar-select-year-item");
             option.value = year;
             option.textContent = year;
 
@@ -164,31 +155,31 @@ class Calendar {
         return div;
     }
     next() {
-        if (this.currentMounth == 12) {
+        if (this.currentMonth == 12) {
             this.currentYear = +this.currentYear + 1;
-            this.currentMounth = 1;
+            this.currentMonth = 1;
         } else {
-            this.currentMounth += 1;
+            this.currentMonth += 1;
         }
         this.preGenerate();
     }
     back() {
-        if (this.currentMounth == 1) {
+        if (this.currentMonth == 1) {
             this.currentYear = +this.currentYear - 1;
-            this.currentMounth = 12;
+            this.currentMonth = 12;
         } else {
-            this.currentMounth -= 1;
+            this.currentMonth -= 1;
         }
         this.preGenerate();
     }
     preGenerate(){
-        this.datesInCurrentMounth = this.getDaysInMounth(
+        this.datesInCurrentMonth = this.getDaysInMonth(
             this.currentYear,
-            this.currentMounth
+            this.currentMonth
         );
         this.DateStartAt = this.getDateStartAt(
             this.currentYear,
-            this.currentMounth
+            this.currentMonth
         );
         this.table.innerHTML = "";
         this.generetaCalendar();
